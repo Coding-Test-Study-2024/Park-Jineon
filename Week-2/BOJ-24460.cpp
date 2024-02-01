@@ -20,7 +20,11 @@ vector<vector<int>> makeSubArray(vector<vector<int>>arr, int x1, int x2, int y1,
 
 
 int pickOne(vector<vector<int>> arr){
-    if(arr.size() == 1) return arr[0][0];
+    if(arr.size() == 2){
+        vector<int> t = {arr[0][0], arr[0][1], arr[1][0], arr[1][1]};
+        sort(t.begin(), t.end());
+        return t[1];
+    }
     
     
     int a = pickOne(makeSubArray(arr, 0, arr.size()/2, 0, arr.size()/2));
@@ -51,7 +55,7 @@ int main() {
     }
  
     
-    cout << pickOne(list);
+    cout << pickOne(list)<<endl;
 
     return 0;
 }
