@@ -3,59 +3,53 @@
 #include <algorithm>
 using namespace std;
 
+//리스트 담을 전역변수 선언
+vector<vector<int>> arr;
 
-vector<vector<int>> makeSubArray(vector<vector<int>>arr, int x1, int x2, int y1, int y2){
-    vector<vector<int>> temp;
-    
-    for(int i = y1; i < y2; i++){
-        vector<int> subTemp;
-        for(int j = x1; j < x2; j++){
-            subTemp.push_back(arr[i][j]);
-        }
-        temp.push_back(subTemp);
+int pickOne(int x, int y, int n){
+    if(n == 2){ //길이가 2일 때 2번째로 작은 값 반환
+        int r[4] = {arr[y][x] , arr[y][x+1], arr[y+1][x], arr[y+1][x+1]};
+        sort(r, r+4);
+        return r[1];
     }
-    
-    return temp;
-}
 
-
-int pickOne(vector<vector<int>> arr){
-    if(arr.size() == 2){
-        vector<int> t = {arr[0][0], arr[0][1], arr[1][0], arr[1][1]};
-        sort(t.begin(), t.end());
-        return t[1];
-    }
+    //리스트 4분할로 나누기
+    int a = pickOne(x, y, n/2);
+    int b = pickOne(x, y+n/2, n/2);
+    int c = pickOne(x+n/2, y, n/2);
+    int d = pickOne(x+n/2, y+n/2, n/2);
     
-    
-    int a = pickOne(makeSubArray(arr, 0, arr.size()/2, 0, arr.size()/2));
-    int b = pickOne(makeSubArray(arr, 0, arr.size()/2, arr.size()/2, arr.size()));
-    int c = pickOne(makeSubArray(arr, arr.size()/2, arr.size(), 0, arr.size()/2));
-    int d = pickOne(makeSubArray(arr, arr.size()/2, arr.size(), arr.size()/2, arr.size()));
-    
-    
-    vector<int> temp = {a, b, c, d};
-    sort(temp.begin(), temp.end());
-    return temp[1];
+    //2번째로 작은 값 반환
+    int result[4] = {a, b, c, d};
+    sort(result,result+4);
+    return result[1];
 }
 
 
 
 int main() {
     int n, m;
-    vector<vector<int>> list;
     cin >> n;
-    
-    for(int i=0; i < n; i++){
-        vector<int> a;
-        for(int j=0; j < n; j++){
-            cin >> m;
-            a.push_back(m);
-        }
-        list.push_back(a);
-    }
- 
-    
-    cout << pickOne(list)<<endl;
 
+    //1일 때 빠져나가기
+    if(n==1){
+        cin >> m;
+        cout << m;
+        return 0;
+    }else{
+        //입력 받기
+        for(int i=0; i < n; i++){
+            vector<int> a;
+            for(int j=0; j < n; j++){
+                cin >> m;
+                a.push_back(m);
+            }
+            arr.push_back(a);
+        }
+
+        //재귀
+        cout << pickOne(0,0,n)<<endl;
+    }
+    
     return 0;
 }
