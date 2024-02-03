@@ -1,7 +1,3 @@
-white = 0
-blue = 0
-
-
 def count(x, y, n):
     std = arr[y][x]
     same = True
@@ -15,6 +11,8 @@ def count(x, y, n):
             break
     
     if same:
+        global blue
+        global white
         if std: blue += 1
         else: white += 1
     else:
@@ -24,6 +22,8 @@ def count(x, y, n):
         count(x+n//2, y+n//2, n//2)
 
 n = int(input())
+white = 0
+blue = 0
 arr = []
 for i in range(n):
     arr.append(list(map(int,input().split())))
