@@ -4,20 +4,26 @@
 using namespace std;
 
 
-vector<vector<int>> video;
+vector<string> video;
 
 string compress(int x, int y, int n) {
-    if (n == 1) return to_string(video[y][x]);
-    string a = compress(0, 0, n / 2);
-    string b = compress(0, n / 2, n / 2);
-    string c = compress(n / 2, 0, n / 2);
-    string d = compress(n / 2, n / 2, n / 2);
+    if (n == 1) {
+        string q;
+        q+=video[y][x];
+        return q;
+    }
+    
 
+    string a = compress(x, y, n / 2);
+    string b = compress(x, y+n / 2, n / 2);
+    string c = compress(x+n / 2, y, n / 2);
+    string d = compress(x+n / 2, y+n / 2, n / 2);
+    
     if (a == b and b == c and c == d) {
-        return '(' + a + ')';
+        return  a;
     }
     else {
-        return '(' + a + b + c + d + ')';
+        return "(" + a + b + c + d + ')';
     }
 }
 
@@ -27,14 +33,13 @@ int main() {
     cin.tie(0);
 
     int n, m;
+    string a;
     cin >> n;
 
     for (int i = 0; i < n; i++) {
-        vector<int> a;
-        for (int j = 0; j < n; j++) {
-            cin >> m;
-            a.push_back(m);
-        }
+        cin >> m;
+        a = to_string(m);
+        for(int j = a.size(); j < n; j++) a = "0"+a;
         video.push_back(a);
     }
 
