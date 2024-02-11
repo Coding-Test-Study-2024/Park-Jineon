@@ -17,7 +17,7 @@ int main(){
     cin >> n;
 
     long long cnt = 1;
-    for(int i = 0; i < n; i++) cnt*=2; // 옮기는 횟수 = (탑 개수)**2 - 1
+    for(int i = 0; i < n; i++) cnt*=2; // 옮기는 횟수 = 2**(탑 개수) - 1
     cout << cnt -1 << endl;
     hanoi(1,3,2,n);
 }
