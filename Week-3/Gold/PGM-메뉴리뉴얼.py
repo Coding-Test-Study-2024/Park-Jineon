@@ -1,36 +1,36 @@
 
-m =[]
-comb = []
 
-def combination(start, n, s):
-    s = s + m[start]
-    global comb
+menu1 = set()
+
+def combination(start, n, s, order):
+    if start > len(order)-1: 
+        return
+        
+    s = s + order[start]
+    global menu1
+    
+
     
     if n==1:
-        comb.append(s)
+        menu1.add(''.join(sorted(list(s))))
     
-    for i in range(start+1,len(m)):
-        combination(i,n-1, s)
+    for i in range(start+1,len(order)):
+        combination(i,n-1, s, order)
                    
 def solution(orders, course):
     answer = []
-    menu = set()
-    global m
-    
-    for i in orders:
-        for j in i:
-            menu.add(j)
-    
-    m = sorted(list(menu))
     
     for i in course:
-        for j in range(len(m)):
-            combination(j, i, "")
+        for j in orders:
+            for k in range(len(orders)):
+                combination(k, i, "",j)
+                
+    comb = sorted(list(menu1),key=lambda x: (len(x), x))
     
     l = len(comb[0])
     M = 2
     a = []
-    
+
     for i in comb:
         cnt = 0
         for k in orders:
